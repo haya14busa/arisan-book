@@ -29,6 +29,9 @@ bool four_loop(int n, int m, int k[MAX_N]) {
 }
 
 bool binary_search(int begin, int end, int array[], int x) {
+    /*
+     * O(logn)
+     */
     // The number of element is 1 && equals to x
     if (begin == end && array[begin] != x) return false;
 
@@ -61,6 +64,31 @@ bool solve_n3logn(int n, int m, int k[MAX_N]) {
     }
 
     return flag;
+}
+
+bool solve_n2logn(int n, int m, int k[MAX_N]) {
+    /*
+     * O(n^2) & O(n^2logn) -> O(n^2logn)
+     */
+    int powered_list[MAX_N * MAX_N];
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            powered_list[i * n + j] = k[i] + k[j];
+        }
+    }
+
+    // For binary serach
+    std::sort(powered_list, powered_list + n * n);
+
+    for (int a = 0; a < n; a++) {
+        for (int b = 0; b < n; b++) {
+            if (binary_search(0, n * n -1, powered_list, m - k[a] - k[b])) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
 
 int main() {
@@ -104,6 +132,11 @@ int main() {
     assert(solve_n3logn(n1, m1, k1) == true);
     assert(solve_n3logn(n2, m2, k2) == false);
     assert(solve_n3logn(n3, m3, k3) == true);
+
+    // O(n^2log n)
+    assert(solve_n2logn(n1, m1, k1) == true);
+    assert(solve_n2logn(n2, m2, k2) == false);
+    assert(solve_n2logn(n3, m3, k3) == true);
 
     puts("All done!");
     return 0;
