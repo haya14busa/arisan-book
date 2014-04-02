@@ -1,13 +1,10 @@
 #include <cstdio>
 #include <assert.h>
 #include <algorithm>
-#include <deque>
-#include <iostream>
-#include <list>
 
 const int MAX_N = 50;
 
-int four_loop(int n, int m, int k[MAX_N]) {
+bool four_loop(int n, int m, int k[MAX_N]) {
     /*
      * O(n^4)
      */
@@ -47,6 +44,25 @@ bool binary_search(int begin, int end, int array[], int x) {
     }
 }
 
+bool solve_n3logn(int n, int m, int k[MAX_N]) {
+    std::sort(k, k + n);
+
+    bool flag = false;
+
+    for (int a = 0; a < n; a++) {
+        for (int b = 0; b < n; b++) {
+            for (int c = 0; c < n; c++) {
+                if (binary_search(0, n - 1, k,
+                                  m - k[a] - k[b] - k[c])) {
+                    flag = true;
+                }
+            }
+        }
+    }
+
+    return flag;
+}
+
 int main() {
     // n: the number of lot
     // m: the sum of 4 cards
@@ -65,9 +81,9 @@ int main() {
     int k3[] = {1, 3, 5, 9, 10}; // -> {1, 3, 5, 9}
 
     // 4 Loop
-    assert(four_loop(n1, m1, k1) == 1);
-    assert(four_loop(n2, m2, k2) == 0);
-    assert(four_loop(n3, m3, k3) == 1);
+    assert(four_loop(n1, m1, k1) == true);
+    assert(four_loop(n2, m2, k2) == false);
+    assert(four_loop(n3, m3, k3) == true);
 
     // Binary-search
     assert(binary_search(0, 2, k1, -1) == false);
@@ -83,6 +99,11 @@ int main() {
     assert(binary_search(0, 3, list, 4) == true);
     assert(binary_search(0, 3, list, 5) == false);
     assert(binary_search(0, 3, list, 50000) == false);
+
+    // O(n^3log n)
+    assert(solve_n3logn(n1, m1, k1) == true);
+    assert(solve_n3logn(n2, m2, k2) == false);
+    assert(solve_n3logn(n3, m3, k3) == true);
 
     puts("All done!");
     return 0;
