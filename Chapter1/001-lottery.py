@@ -82,6 +82,13 @@ def main():
     assert binary_search([1,3,5,6,7,10], 2) == False
     assert binary_search([1,3,5,6,7,10], -10000) == False
 
+    assert binary_search([1,3,5,6,7], 1) == True
+    assert binary_search([1,3,5,6,7], 3) == True
+    assert binary_search([1,3,5,6,7], 5) == True
+    assert binary_search([1,3,5,6,7], 6) == True
+    assert binary_search([1,3,5,6,7], 7) == True
+    assert binary_search([1,3,5,6,7], 8) == False
+
     # Improve
     assert improved_lottery(3, 10, [1, 3, 5]) == True
     assert improved_lottery(3, 9, [1, 3, 5]) == False
