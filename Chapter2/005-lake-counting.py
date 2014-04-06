@@ -48,7 +48,7 @@ from copy import deepcopy
 def lake_counting(n, m, field):
     def is_in_field(x, y):
         ''' Boolean: position x, y is in the field?  '''
-        return 0 <= x < n and 0 <= y < m 
+        return 0 <= x < n and 0 <= y < m
 
     def is_lake(x, y):
         ''' Boolean: the position is lake? '''
